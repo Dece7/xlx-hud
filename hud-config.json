@@ -11,5 +11,7 @@
   "thinking": false,
   "files": false,
   "requests": false,
-  "tools": false
+  "tools": false,
+  "ahead": false,
+  "uncommitted": false
 }
