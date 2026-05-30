@@ -202,11 +202,24 @@ parts=()
 [ -n "$requests_info" ] && parts+=("$requests_info")
 [ -n "$tools_info" ] && parts+=("$tools_info")
 
-# Join with triple space
+# Join with triple space, newline every 4 elements
 output=""
+line=""
+count=0
 for part in "${parts[@]}"; do
-  if [ -n "$output" ]; then output="${output}   "; fi
-  output="${output}${part}"
+  if [ -n "$line" ]; then line="${line}   "; fi
+  line="${line}${part}"
+  count=$((count + 1))
+  if [ "$count" -eq 4 ]; then
+    if [ -n "$output" ]; then output="${output}\n"; fi
+    output="${output}${line}"
+    line=""
+    count=0
+  fi
 done
+if [ -n "$line" ]; then
+  if [ -n "$output" ]; then output="${output}\n"; fi
+  output="${output}${line}"
+fi
 
-echo "$output"
+echo -e "$output"
