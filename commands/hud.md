@@ -11,18 +11,20 @@ HUD 配置管理工具。
 ━━━ HUD 配置 ━━━
 
 📍 核心信息
-  [✅] model     模型名称
-  [✅] folder    工作区文件夹
+  [✅] model      模型名称（始终开启）
+  [✅] folder     工作区文件夹
 
 📊 会话数据
-  [✅] context   上下文进度条
-  [❌] tokens    累计输入 Token
-  [✅] cache     缓存命中率
+  [✅] context    上下文进度条
+  [❌] tokens     累计输入 Token
+  [✅] cache      缓存命中率
+  [❌] duration   会话时长
 
 🔧 开发信息
-  [❌] git       Git 分支 + 增删统计
-  [❌] lines     代码变更行数
-  [❌] effort    思考等级
+  [❌] git        Git 分支 + 增删统计
+  [❌] lines      代码变更行数
+  [❌] effort     思考等级
+  [❌] thinking   思考模式状态
 ```
 
 3. 用 AskUserQuestion 让用户选择要切换的元素，选项格式为：
