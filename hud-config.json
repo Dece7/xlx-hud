@@ -1,0 +1,10 @@
+{
+  "model": true,
+  "git": false,
+  "context": true,
+  "folder": true,
+  "cache": true,
+  "lines": false,
+  "effort": false,
+  "tokens": false
+}
