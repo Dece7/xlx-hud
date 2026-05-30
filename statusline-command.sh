@@ -39,6 +39,33 @@ if cfg git; then
   fi
 fi
 
+# --- Ahead/behind origin ---
+if cfg ahead; then
+  ab_branch=$(git -C "$work_dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [ -n "$ab_branch" ]; then
+    git -C "$work_dir" fetch --quiet 2>/dev/null
+    ahead_count=$(git -C "$work_dir" rev-list --count "@{upstream}..HEAD" 2>/dev/null || echo "0")
+    behind_count=$(git -C "$work_dir" rev-list --count "HEAD..@{upstream}" 2>/dev/null || echo "0")
+    [ -z "$ahead_count" ] && ahead_count=0
+    [ -z "$behind_count" ] && behind_count=0
+    if [ "$ahead_count" -gt 0 ] || [ "$behind_count" -gt 0 ]; then
+      ahead_info="⬆${ahead_count} ⬇${behind_count}"
+    else
+      ahead_info="⬆⬇ sync"
+    fi
+  fi
+fi
+
+# --- Uncommitted files ---
+if cfg uncommitted; then
+  uncommit_count=$(git -C "$work_dir" status --short 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$uncommit_count" -gt 0 ]; then
+    uncommit_info="📋 ${uncommit_count}"
+  else
+    uncommit_info="📋 clean"
+  fi
+fi
+
 # --- Context bar ---
 if cfg context; then
   used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // 0')
@@ -201,6 +228,8 @@ parts=()
 [ -n "$files_info" ] && parts+=("$files_info")
 [ -n "$requests_info" ] && parts+=("$requests_info")
 [ -n "$tools_info" ] && parts+=("$tools_info")
+[ -n "$ahead_info" ] && parts+=("$ahead_info")
+[ -n "$uncommit_info" ] && parts+=("$uncommit_info")
 
 # Join with triple space, newline every 4 elements
 output=""
