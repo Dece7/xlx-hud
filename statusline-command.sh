@@ -111,7 +111,7 @@ fi
 # --- Effort level ---
 if cfg effort; then
   effort_level=$(echo "$input" | jq -r '.effort.level // "unknown"')
-  effort_info="⚡${effort_level}"
+  effort_info="⚡ ${effort_level}"
 fi
 
 # --- Cumulative input tokens ---
@@ -124,7 +124,7 @@ if cfg tokens; then
   else
     tokens_display="${total_in}"
   fi
-  tokens_info="📥${tokens_display}"
+  tokens_info="📥 ${tokens_display}"
 fi
 
 # --- Session duration ---
@@ -142,7 +142,7 @@ if cfg duration; then
     else
       duration_display="${duration_sec}s"
     fi
-    duration_info="⏱️${duration_display}"
+    duration_info="⏱️ ${duration_display}"
   fi
 fi
 
@@ -150,9 +150,9 @@ fi
 if cfg thinking; then
   thinking_on=$(echo "$input" | jq -r '.thinking.enabled // false')
   if [ "$thinking_on" = "true" ]; then
-    thinking_info="${cyan}🧠on${reset}"
+    thinking_info="${cyan}🧠 on${reset}"
   else
-    thinking_info="🧠off"
+    thinking_info="🧠 off"
   fi
 fi
 
@@ -169,10 +169,10 @@ parts=()
 [ -n "$duration_info" ] && parts+=("$duration_info")
 [ -n "$thinking_info" ] && parts+=("$thinking_info")
 
-# Join with double space
+# Join with triple space
 output=""
 for part in "${parts[@]}"; do
-  if [ -n "$output" ]; then output="${output}  "; fi
+  if [ -n "$output" ]; then output="${output}   "; fi
   output="${output}${part}"
 done
 
