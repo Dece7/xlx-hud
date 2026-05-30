@@ -8,5 +8,8 @@
   "effort": false,
   "tokens": false,
   "duration": false,
-  "thinking": false
+  "thinking": false,
+  "files": false,
+  "requests": false,
+  "tools": false
 }
