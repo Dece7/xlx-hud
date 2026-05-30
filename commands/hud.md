@@ -19,6 +19,9 @@ HUD 配置管理工具。
   [❌] tokens     累计输入 Token
   [✅] cache      缓存命中率
   [❌] duration   会话时长
+  [❌] files      编辑文件数
+  [❌] requests   API 请求次数
+  [❌] tools      工具调用次数
 
 🔧 开发信息
   [❌] git        Git 分支 + 增删统计
