@@ -17,11 +17,12 @@
 ⚡ max   📥 250k   ⏱️ 1h24m   🧠 on
 ```
 
-**全开 13 个元素：**
+**全开 15 个元素：**
 ```
 🤖 mimo-v2.5-pro[1M]   🌿 main +3/-1   💭 ████░░░░░░ 35%   📁 CCWork1
 🎯 98.79%   📝 +887/-215   ⚡ max   📥 250k
 ⏱️ 1h24m   🧠 on   📂 11   📡 698   🔧 261
+⬆2 ⬇0   📋 3
 ```
 
 ## 快速开始
@@ -66,6 +67,8 @@ bash install.sh
 | lines | 📝 | 会话累计代码变更行数 | ❌ |
 | effort | ⚡ | 当前思考等级（max/xhigh/high/medium/low） | ❌ |
 | thinking | 🧠 | 思考模式开关状态（on/off） | ❌ |
+| ahead | ⬆⬇ | 领先/落后 origin 的提交数 | ❌ |
+| uncommitted | 📋 | 未提交的文件数 | ❌ |
 
 ### 颜色说明
 
@@ -122,7 +125,9 @@ bash install.sh
   "thinking": false,
   "files": false,
   "requests": false,
-  "tools": false
+  "tools": false,
+  "ahead": false,
+  "uncommitted": false
 }
 ```
 
