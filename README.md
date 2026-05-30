@@ -7,7 +7,7 @@ Claude Code 个性化状态栏 — 在输入框下方实时展示模型、Git、
 ## 效果
 
 ```
-🤖 mimo-v2.5-pro[1M]  💭 ████░░░░░░ 35%  📁 CCWork1  🎯 98.65%  ⏱️1h24m  🧠on
+🤖 mimo-v2.5-pro[1M]   💭 ████░░░░░░ 35%   📁 CCWork1   🎯 98.65%   📂 11   📡 698   🔧 261
 ```
 
 ## 功能
@@ -24,6 +24,9 @@ Claude Code 个性化状态栏 — 在输入框下方实时展示模型、Git、
 | tokens | 📥 | 累计输入 Token | 关闭 |
 | duration | ⏱️ | 会话持续时间 | 关闭 |
 | thinking | 🧠 | 思考模式状态（on/off） | 关闭 |
+| files | 📂 | 本次会话编辑的文件数 | 关闭 |
+| requests | 📡 | API 请求次数 | 关闭 |
+| tools | 🔧 | 工具调用次数 | 关闭 |
 
 所有元素可通过 `/hud` 指令交互式开关。
 
@@ -60,7 +63,10 @@ bash uninstall.sh
   "effort": false,
   "tokens": false,
   "duration": false,
-  "thinking": false
+  "thinking": false,
+  "files": false,
+  "requests": false,
+  "tools": false
 }
 ```
 
@@ -76,8 +82,13 @@ bash uninstall.sh
 
 Claude Code 每次刷新状态栏时，将当前会话状态打包为 JSON 通过 stdin 传给脚本，脚本解析后输出格式化文本。
 
-脚本读取会话 JSONL 文件（`~/.claude/projects/<project>/<session-id>.jsonl`）计算会话级缓存命中率：
+数据来源：
+- **statusLine JSON**：模型、上下文、费用、思考等级等
+- **session JSONL**：缓存命中率、API 请求次数、工具调用次数
+- **file-history**：编辑文件数
+- **git 命令**：分支、增删统计
 
+缓存命中率公式（从 JSONL 累计计算）：
 ```
 缓存命中率 = cache_read / (input + cache_read) × 100
 ```
