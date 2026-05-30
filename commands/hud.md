@@ -28,6 +28,8 @@ HUD 配置管理工具。
   [❌] lines      代码变更行数
   [❌] effort     思考等级
   [❌] thinking   思考模式状态
+  [❌] ahead      领先/落后 origin
+  [❌] uncommitted 未提交文件数
 ```
 
 3. 用 AskUserQuestion 让用户选择要切换的元素，选项格式为：
