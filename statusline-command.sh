@@ -156,6 +156,36 @@ if cfg thinking; then
   fi
 fi
 
+# --- Files edited this session ---
+if cfg files; then
+  session_id=$(echo "$input" | jq -r '.session_id // ""')
+  if [ -n "$session_id" ]; then
+    fh_dir="$HOME/.claude/file-history/$session_id"
+    if [ -d "$fh_dir" ]; then
+      file_count=$(ls -1 "$fh_dir" 2>/dev/null | sed 's/@[^@]*$//' | sort -u | wc -l)
+      files_info="📂 ${file_count}"
+    fi
+  fi
+fi
+
+# --- API requests count ---
+if cfg requests || cfg tools; then
+  # Reuse transcript from cache section, or fetch it
+  if [ -z "$transcript" ]; then
+    transcript=$(echo "$input" | jq -r '(.transcript_path // "") | gsub("\\\\"; "/")' | cygpath -f - 2>/dev/null)
+  fi
+  if [ -n "$transcript" ] && [ -f "$transcript" ]; then
+    if cfg requests; then
+      req_count=$(grep -c '"usage"' "$transcript" 2>/dev/null || echo "0")
+      requests_info="📡 ${req_count}"
+    fi
+    if cfg tools; then
+      tool_count=$(grep -c '"tool_use"' "$transcript" 2>/dev/null || echo "0")
+      tools_info="🔧 ${tool_count}"
+    fi
+  fi
+fi
+
 # --- Assemble output ---
 parts=()
 [ -n "$model_info" ] && parts+=("$model_info")
@@ -168,6 +198,9 @@ parts=()
 [ -n "$tokens_info" ] && parts+=("$tokens_info")
 [ -n "$duration_info" ] && parts+=("$duration_info")
 [ -n "$thinking_info" ] && parts+=("$thinking_info")
+[ -n "$files_info" ] && parts+=("$files_info")
+[ -n "$requests_info" ] && parts+=("$requests_info")
+[ -n "$tools_info" ] && parts+=("$tools_info")
 
 # Join with triple space
 output=""
