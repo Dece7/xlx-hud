@@ -127,6 +127,35 @@ if cfg tokens; then
   tokens_info="📥${tokens_display}"
 fi
 
+# --- Session duration ---
+if cfg duration; then
+  duration_ms=$(echo "$input" | jq -r '.cost.total_duration_ms // 0')
+  if [ "$duration_ms" -gt 0 ]; then
+    duration_sec=$(( duration_ms / 1000 ))
+    if [ "$duration_sec" -ge 3600 ]; then
+      duration_h=$(( duration_sec / 3600 ))
+      duration_m=$(( (duration_sec % 3600) / 60 ))
+      duration_display="${duration_h}h${duration_m}m"
+    elif [ "$duration_sec" -ge 60 ]; then
+      duration_m=$(( duration_sec / 60 ))
+      duration_display="${duration_m}m"
+    else
+      duration_display="${duration_sec}s"
+    fi
+    duration_info="⏱️${duration_display}"
+  fi
+fi
+
+# --- Thinking mode ---
+if cfg thinking; then
+  thinking_on=$(echo "$input" | jq -r '.thinking.enabled // false')
+  if [ "$thinking_on" = "true" ]; then
+    thinking_info="${cyan}🧠on${reset}"
+  else
+    thinking_info="🧠off"
+  fi
+fi
+
 # --- Assemble output ---
 parts=()
 [ -n "$model_info" ] && parts+=("$model_info")
@@ -137,6 +166,8 @@ parts=()
 [ -n "$lines_info" ] && parts+=("$lines_info")
 [ -n "$effort_info" ] && parts+=("$effort_info")
 [ -n "$tokens_info" ] && parts+=("$tokens_info")
+[ -n "$duration_info" ] && parts+=("$duration_info")
+[ -n "$thinking_info" ] && parts+=("$thinking_info")
 
 # Join with double space
 output=""
