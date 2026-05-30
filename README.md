@@ -7,7 +7,7 @@ Claude Code 个性化状态栏 — 在输入框下方实时展示模型、Git、
 ## 效果
 
 ```
-🤖 mimo-v2.5-pro[1M]  💭 ████░░░░░░ 35%  📁 CCWork1  🎯 98.65%
+🤖 mimo-v2.5-pro[1M]  💭 ████░░░░░░ 35%  📁 CCWork1  🎯 98.65%  ⏱️1h24m  🧠on
 ```
 
 ## 功能
@@ -22,6 +22,8 @@ Claude Code 个性化状态栏 — 在输入框下方实时展示模型、Git、
 | lines | 📝 | 代码变更行数 | 关闭 |
 | effort | ⚡ | 思考等级 | 关闭 |
 | tokens | 📥 | 累计输入 Token | 关闭 |
+| duration | ⏱️ | 会话持续时间 | 关闭 |
+| thinking | 🧠 | 思考模式状态（on/off） | 关闭 |
 
 所有元素可通过 `/hud` 指令交互式开关。
 
@@ -56,7 +58,9 @@ bash uninstall.sh
   "cache": true,
   "lines": false,
   "effort": false,
-  "tokens": false
+  "tokens": false,
+  "duration": false,
+  "thinking": false
 }
 ```
 
