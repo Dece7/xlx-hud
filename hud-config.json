@@ -6,5 +6,7 @@
   "cache": true,
   "lines": false,
   "effort": false,
-  "tokens": false
+  "tokens": false,
+  "duration": false,
+  "thinking": false
 }
